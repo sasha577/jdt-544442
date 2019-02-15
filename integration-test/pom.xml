@@ -1,0 +1,253 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com._7p.solcon.test</groupId>
+    <artifactId>fit3-parent</artifactId>
+    <version>5.6-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>fit-integration-test</artifactId>
+  <name>integration-test</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <integrationtest.recordreplay.mode>REPLAY</integrationtest.recordreplay.mode>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>com._7p.solcon.test</groupId>
+      <artifactId>fit-integration-test-base</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com._7p.solcon.test</groupId>
+      <artifactId>fit-prov-fit2nem</artifactId>
+    </dependency>
+
+<!--     <dependency> -->
+<!--       <groupId>com.7p-group.oss.common</groupId> -->
+<!--       <artifactId>aspectlog</artifactId> -->
+<!--     </dependency> -->
+
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <!-- TODO: move these things into src/test/resources -->
+    <testResources>
+      <testResource>
+        <directory>src/test/java</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </testResource>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+      <testResource>
+        <directory>generated/src/test/resources</directory>
+      </testResource>
+    </testResources>
+
+    <plugins>
+
+<!--       <plugin> -->
+<!--         <groupId>org.codehaus.mojo</groupId> -->
+<!--         <artifactId>aspectj-maven-plugin</artifactId> -->
+<!--         <configuration> -->
+<!--           <source>${maven.compiler.target}</source> -->
+<!--           <target>${maven.compiler.target}</target> -->
+<!--           <complianceLevel>${maven.compiler.target}</complianceLevel> -->
+<!--           <aspectLibraries> -->
+<!--             <aspectLibrary> -->
+<!--               <groupId>com.7p-group.oss.common</groupId> -->
+<!--               <artifactId>aspectlog</artifactId> -->
+<!--             </aspectLibrary> -->
+<!--           </aspectLibraries> -->
+<!--         </configuration> -->
+<!--         <executions> -->
+<!--           <execution> -->
+<!--             <id>logging-aspects</id> -->
+<!--             <goals> -->
+<!--               <goal>compile</goal> -->
+<!--             </goals> -->
+<!--           </execution> -->
+<!--         </executions> -->
+<!--       </plugin> -->
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>${jacoco.agent.argLine}</argLine>
+          <systemPropertyVariables>
+            <integrationtest.recordreplay.mode>${integrationtest.recordreplay.mode}</integrationtest.recordreplay.mode>
+            <FIT_LOG_DIR>${project.build.directory}</FIT_LOG_DIR>
+          </systemPropertyVariables>
+          <excludes>
+            <exclude>de/_7p/solcon/fit/integration/**</exclude>
+          </excludes>
+          <!-- <includes> -->
+          <!-- <include>**/ReplayableIntegrationTests.java</include> -->
+          <!-- </includes> -->
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.coderu</groupId>
+        <artifactId>coderu-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>coderu-test</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <classPath>${project.build.testOutputDirectory}</classPath>
+              <classesDependencyInPackageAllowed>true</classesDependencyInPackageAllowed>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+<!--       <plugin> -->
+<!--         <artifactId>maven-antrun-plugin</artifactId> -->
+<!--         <executions> -->
+<!--           <execution> -->
+<!--             <phase>generate-sources</phase> -->
+<!--             <configuration> -->
+<!--               <target> -->
+<!--                 <property name="plugin.cp" refid="maven.plugin.classpath" /> -->
+<!--                 <ant antfile="src/main/ant/log-configuration.xml" /> -->
+<!--               </target> -->
+<!--             </configuration> -->
+<!--             <goals> -->
+<!--               <goal>run</goal> -->
+<!--             </goals> -->
+<!--           </execution> -->
+<!--         </executions> -->
+<!--       </plugin> -->
+
+
+<!--       <plugin> -->
+<!--         <groupId>org.bitstrings.maven.plugins</groupId> -->
+<!--         <artifactId>dependencypath-maven-plugin</artifactId> -->
+<!--         <executions> -->
+<!--           <execution> -->
+<!--             <id>set-all</id> -->
+<!--             <goals> -->
+<!--               <goal>set</goal> -->
+<!--             </goals> -->
+<!--           </execution> -->
+<!--         </executions> -->
+<!--       </plugin> -->
+
+
+    </plugins>
+
+  </build>
+
+  <profiles>
+    <profile>
+      <id>integrationTest</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <systemPropertyVariables>
+                <integrationtest.recordreplay.mode>${integrationtest.recordreplay.mode}</integrationtest.recordreplay.mode>
+                <FIT_LOG_DIR>${project.build.directory}</FIT_LOG_DIR>
+              </systemPropertyVariables>
+              <includes>
+                <include>**/ReplayableIntegrationTests.java</include>
+              </includes>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>test-coverage</id>
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <!-- <argLine>${jacoco.agent.it.arg}</argLine> -->
+              <systemPropertyVariables>
+                <integrationtest.recordreplay.mode>REPLAY</integrationtest.recordreplay.mode>
+              </systemPropertyVariables>
+              <includes>
+                <include>**/ReplayableIntegrationTests.java</include>
+              </includes>
+              <testFailureIgnore>true</testFailureIgnore>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>NoIntegrationTest</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>de/_7p/solcon/fit/integration/**</exclude>
+              </excludes>
+              <redirectTestOutputToFile>true</redirectTestOutputToFile>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
+
+</project>

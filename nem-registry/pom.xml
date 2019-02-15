@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>fit3-parent</artifactId>
+    <groupId>com._7p.solcon.test</groupId>
+    <version>5.6-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>fit-nem-registry</artifactId>
+  <name>nem-registry</name>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>com._7p.solcon.test</groupId>
+      <artifactId>fit-nem</artifactId>
+    </dependency>
+
+<!--     <dependency> -->
+<!--       <groupId>com.7p-group.oss.tccm</groupId> -->
+<!--       <artifactId>common-aspects</artifactId> -->
+<!--     </dependency> -->
+
+<!--     <dependency> -->
+<!--       <groupId>org.coderu</groupId> -->
+<!--       <artifactId>coderu-junit-adapter</artifactId> -->
+<!--       <scope>test</scope> -->
+<!--     </dependency> -->
+
+<!--     <dependency> -->
+<!--       <groupId>org.jmock</groupId> -->
+<!--       <artifactId>jmock-junit4</artifactId> -->
+<!--       <scope>test</scope> -->
+<!--     </dependency> -->
+
+<!--     <dependency> -->
+<!--       <groupId>org.jmock</groupId> -->
+<!--       <artifactId>jmock-legacy</artifactId> -->
+<!--       <scope>test</scope> -->
+<!--     </dependency> -->
+
+<!--     <dependency> -->
+<!--       <groupId>org.hamcrest</groupId> -->
+<!--       <artifactId>hamcrest-library</artifactId> -->
+<!--       <scope>test</scope> -->
+<!--     </dependency> -->
+
+<!--     <dependency> -->
+<!--       <groupId>junit</groupId> -->
+<!--       <artifactId>junit</artifactId> -->
+<!--       <scope>test</scope> -->
+<!--     </dependency> -->
+
+    <dependency>
+      <groupId>com._7p.solcon.test</groupId>
+      <artifactId>fit-test-base</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <!-- Build Settings -->
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/java</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </testResource>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
+
+
+    <plugins>
+
+      <plugin>
+        <groupId>org.coderu</groupId>
+        <artifactId>coderu-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>coderu</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <classPath>${project.build.outputDirectory}</classPath>
+              <classesDependencyInPackageAllowed>true</classesDependencyInPackageAllowed>
+            </configuration>
+          </execution>
+          <execution>
+            <id>coderu-test</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <classPath>${project.build.testOutputDirectory}</classPath>
+              <classesDependencyInPackageAllowed>true</classesDependencyInPackageAllowed>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+
+<!--       <plugin> -->
+<!--         <groupId>org.codehaus.mojo</groupId> -->
+<!--         <artifactId>aspectj-maven-plugin</artifactId> -->
+<!--         <configuration> -->
+<!--           <showWeaveInfo>true</showWeaveInfo> -->
+<!--           <source>${maven.compiler.target}</source> -->
+<!--           <target>${maven.compiler.target}</target> -->
+<!--           <complianceLevel>${maven.compiler.target}</complianceLevel> -->
+<!--         </configuration> -->
+<!--         <executions> -->
+<!--           <execution> -->
+<!--             <id>call-duration</id> -->
+<!--             <goals> -->
+<!--               <goal>compile</goal> -->
+<!--             </goals> -->
+<!--           </execution> -->
+<!--           <execution> -->
+<!--             <id>logging.recorder</id> -->
+<!--             <goals> -->
+<!--               <goal>compile</goal> -->
+<!--             </goals> -->
+<!--             <configuration> -->
+<!--               <aspectLibraries> -->
+<!--                 <aspectLibrary> -->
+<!--                   <groupId>com.7p-group.oss.common</groupId> -->
+<!--                   <artifactId>aspectlog</artifactId> -->
+<!--                 </aspectLibrary> -->
+<!--                 <aspectLibrary> -->
+<!--                   <groupId>com._7p.solcon.test</groupId> -->
+<!--                   <artifactId>provrecorder</artifactId> -->
+<!--                 </aspectLibrary> -->
+<!--                 <aspectLibrary> -->
+<!--                   <groupId>com.7p-group.oss.tccm</groupId> -->
+<!--                   <artifactId>common-aspects</artifactId> -->
+<!--                 </aspectLibrary> -->
+<!--               </aspectLibraries> -->
+<!--             </configuration> -->
+<!--           </execution> -->
+<!--         </executions> -->
+<!--       </plugin> -->
+
+<!--       <plugin> -->
+<!--         <groupId>de.andrena.tools.macker</groupId> -->
+<!--         <artifactId>macker-maven-plugin</artifactId> -->
+<!--         <configuration> -->
+<!--           <rule>./src/main/config/macker-rules.xml</rule> -->
+<!--         </configuration> -->
+<!--         <executions> -->
+<!--           <execution> -->
+<!--             <phase>compile</phase> -->
+<!--             <goals> -->
+<!--               <goal>macker</goal> -->
+<!--             </goals> -->
+<!--           </execution> -->
+<!--         </executions> -->
+<!--       </plugin> -->
+
+    </plugins>
+  </build>
+
+
+</project>
